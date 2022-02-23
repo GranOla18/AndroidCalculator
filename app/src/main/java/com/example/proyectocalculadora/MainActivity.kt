@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import org.w3c.dom.Text
-import kotlin.math.log
 
 private val TAG = "MainActivity"
 
@@ -15,8 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private var userInput: TextView? = null
     private var calcHist: TextView? = null
-    val input = mutableListOf<Int>()
-    var inputFloat: Float = 0f
+    var input: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +47,11 @@ class MainActivity : AppCompatActivity() {
         var oper: Int = 0
         var num1: Int = 0
         var num2: Int = 0
+        var num1F: Float = 0f
+        var num2F: Float = 0f
+        var isFloat: Boolean = false
         var result: Int = 0
+        var resultF: Float = 0f
         var calcHistTxt: String = ""
 
         //Button 1
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 1")
                 userInput?.append("1")
-                input.add(1)
+                input += "1"
             }
         })
 
@@ -67,7 +68,8 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 2")
                 userInput?.append("2")
-                input.add(2)
+                input += "2"
+                Log.d(TAG,input)
             }
         })
 
@@ -76,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 3")
                 userInput?.append("3")
-                input.add(3)
+                input += "3"
             }
         })
 
@@ -85,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 4")
                 userInput?.append("4")
-                input.add(4)
+                input += "4"
             }
         })
 
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 5")
                 userInput?.append("5")
-                input.add(5)
+                input += "5"
             }
         })
 
@@ -103,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 6")
                 userInput?.append("6")
-                input.add(6)
+                input += "6"
             }
         })
 
@@ -112,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 7")
                 userInput?.append("7")
-                input.add(7)
+                input += "7"
             }
         })
 
@@ -121,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 8")
                 userInput?.append("8")
-                input.add(8)
+                input += "8"
             }
         })
 
@@ -130,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 9")
                 userInput?.append("9")
-                input.add(9)
+                input += "9"
             }
         })
 
@@ -139,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick 0")
                 userInput?.append("0")
-                input.add(0)
+                input += "0"
             }
         })
 
@@ -148,6 +150,10 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick dot")
                 userInput?.append(".")
+                input += "."
+                calcHistTxt = num1F.toString()
+                Log.d(TAG, num1F.toString())
+                isFloat = true
             }
         })
 
@@ -157,6 +163,10 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onClick C")
                 userInput?.setText("")
                 calcHist?.setText("")
+                num1 = 0
+                num2 = 0
+                num1F = 0f
+                num2F = 0f
             }
         })
 
@@ -164,10 +174,17 @@ class MainActivity : AppCompatActivity() {
         buttonSum?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick Sum")
-                num1 = input.removeAt(0)
                 oper = 1
+                if(isFloat) {
+                    num1F = input.toFloat()
+                }
+                else {
+                    //num1 = input.removeAt(0)
+                    num1 = input.toInt()
+                    //calcHist?.setText(num1.toString())
+                }
                 userInput?.append(" + ")
-                calcHist?.setText(num1.toString())
+                input = ""
             }
         })
 
@@ -175,9 +192,16 @@ class MainActivity : AppCompatActivity() {
         buttonMin?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick Min")
-                num1 = input.removeAt(0)
                 oper = 2
+                if(isFloat) {
+                    num1F = input.toFloat()
+                }
+                else {
+                    num1 = input.toInt()
+
+                }
                 userInput?.append(" - ")
+                input = ""
             }
         })
 
@@ -185,9 +209,15 @@ class MainActivity : AppCompatActivity() {
         buttonMult?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick Mult")
-                num1 = input.removeAt(0)
                 oper = 3
+                if(isFloat) {
+                    num1F = input.toFloat()
+                }
+                else {
+                    num1 = input.toInt()
+                }
                 userInput?.append(" x ")
+                input = ""
             }
         })
 
@@ -195,9 +225,15 @@ class MainActivity : AppCompatActivity() {
         buttonDiv?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick Div")
-                num1 = input.removeAt(0)
                 oper = 4
+                if(isFloat) {
+                    num1F = input.toFloat()
+                }
+                else {
+                    num1 = input.toInt()
+                }
                 userInput?.append(" ÷ ")
+                input = ""
             }
         })
 
@@ -205,28 +241,59 @@ class MainActivity : AppCompatActivity() {
         buttonEqu.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Log.d(TAG, "onClick Equal")
-                num2 = input.removeAt(0)
-
-                if(oper == 1) {
-                    result = num1 + num2
-                    //calcHist?.setText(num1, )
-                    calcHistTxt = num1.toString() + " + " + num2.toString()
+                if(isFloat) {
+                    num2F = input.toFloat()
+                    Log.d(TAG, num2F.toString())
+                    //Sum
+                    if(oper == 1) {
+                        //Log.d(TAG, "aki")
+                        resultF = num1F + num2F
+                        //calcHist?.setText(num1, )
+                        calcHistTxt = num1F.toString() + " + " + num2F.toString()
+                    }
+                    //Min
+                    else if (oper == 2) {
+                        resultF = num1F - num2F
+                        calcHistTxt = num1F.toString() + " - " + num2F.toString()
+                    }
+                    //Mult
+                    else if (oper == 3) {
+                        resultF = num1F * num2F
+                        calcHistTxt = num1F.toString() + " x " + num2F.toString()
+                    }
+                    //Div
+                    else if (oper == 4) {
+                        resultF = num1F / num2F
+                        calcHistTxt = num1F.toString() + " ÷ " + num2F.toString()
+                    }
+                    userInput?.setText(resultF.toString())
+                    input = resultF.toString()
                 }
-                else if (oper == 2) {
-                    result = num1 - num2
-                    calcHistTxt = num1.toString() + " - " + num2.toString()
+                else {
+                    num2 = input.toInt()
+                    Log.d(TAG, "akulla")
+                    if(oper == 1) {
+                        result = num1 + num2
+                        //calcHist?.setText(num1, )
+                        calcHistTxt = num1.toString() + " + " + num2.toString()
+                    }
+                    else if (oper == 2) {
+                        result = num1 - num2
+                        calcHistTxt = num1.toString() + " - " + num2.toString()
+                    }
+                    else if (oper == 3) {
+                        result = num1 * num2
+                        calcHistTxt = num1.toString() + " x " + num2.toString()
+                    }
+                    else if (oper == 4) {
+                        resultF = (num1 / num2).toFloat()
+                        calcHistTxt = num1.toString() + " ÷ " + num2.toString()
+                    }
+                    userInput?.setText(result.toString())
+                    //input.add(result)
+                    input = result.toString()
                 }
-                else if (oper == 3) {
-                    result = num1 * num2
-                    calcHistTxt = num1.toString() + " x " + num2.toString()
-                }
-                else if (oper == 4) {
-                    result = num1 / num2
-                    calcHistTxt = num1.toString() + " ÷ " + num2.toString()
-                }
-                userInput?.setText(result.toString())
                 calcHist?.setText(calcHistTxt)
-                input.add(result)
             }
         })
     }
