@@ -163,6 +163,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onClick C")
                 userInput?.setText("")
                 calcHist?.setText("")
+                input = ""
                 num1 = 0
                 num2 = 0
                 num1F = 0f
